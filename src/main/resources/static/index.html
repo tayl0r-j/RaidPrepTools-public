@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Raid Tool (MVP)</title>
+  <style>
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      margin: 0;
+      background: #0f1115;
+      color: #e6e6e6;
+    }
+
+    header {
+      padding: 12px 16px;
+      background: #161a22;
+      border-bottom: 1px solid #2a2f3a;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .card {
+      background: #161a22;
+      border: 1px solid #2a2f3a;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    h2 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+    }
+
+    input,
+    select,
+    button {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #2a2f3a;
+      background: #0f1115;
+      color: #e6e6e6;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    /* Teams list */
+    .team-item {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .team-item:hover {
+      background: #0f1115;
+    }
+
+    .team-item.active {
+      border-color: #3b82f6;
+      background: #0f1115;
+    }
+
+    /* Members list */
+    .member {
+      padding: 8px;
+      border-radius: 8px;
+      background: #0f1115;
+      margin-bottom: 6px;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .member.active {
+      border-color: #22c55e;
+    }
+
+    .muted {
+      opacity: .7;
+      font-size: 12px;
+    }
+
+    .error {
+      color: #f87171;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    .success {
+      color: #34d399;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <strong>Raid Tool MVP</strong> <span class="muted">— quick UI for testing DSA</span>
+  </header>
+
+  <main>
+    <!-- LEFT COLUMN -->
+    <section class="card">
+      <h2>Teams</h2>
+
+      <div class="row">
+        <input id="newTeamName" placeholder="New team name" />
+        <button id="createTeamBtn">Create</button>
+      </div>
+
+      <div id="teamsList"></div>
+      <div id="teamMsg" class="muted"></div>
+    </section>
+
+    <!-- RIGHT COLUMN -->
+    <section class="card">
+      <h2 id="selectedTeamTitle">Select a team</h2>
+
+      <div class="row">
+        <input id="playerName" placeholder="Player name" />
+        <select id="playerClass">
+          <option value="">Class</option>
+          <option>WARRIOR</option>
+          <option>PRIEST</option>
+          <option>DRUID</option>
+          <option>MAGE</option>
+          <option>ROGUE</option>
+          <option>HUNTER</option>
+          <option>WARLOCK</option>
+          <option>PALADIN</option>
+        </select>
+        <select id="playerSpec" disabled>
+          <option value="">Spec</option>
+        </select>
+        <select id="role">
+          <option value="">Role</option>
+          <option>TANK</option>
+          <option>HEALER</option>
+          <option>MELEE</option>
+          <option>RANGED</option>
+        </select>
+        <button id="addMemberBtn" disabled>Add Member</button>
+      </div>
+
+      <div class="row">
+        <div style="flex:1">
+          <strong>Members</strong>
+          <div id="membersList" style="margin-top:6px;"></div>
+        </div>
+
+        <div style="flex:2; display:flex; flex-direction:column;">
+          <div class="row" style="justify-content:space-between; margin:0 0 6px 0; align-items:center;">
+            <strong id="raidGridTitle">Raid Grid</strong>
+            <div class="muted">Click a member then click a slot</div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <label for="raidSize" class="muted">Raid size:</label>
+              <select id="raidSize">
+                <option value="10">10 (2 groups)</option>
+                <option value="25">25 (5 groups)</option>
+                <option value="40" selected>40 (8 groups)</option>
+              </select>
+              <button id="clearSlotBtn" disabled>Clear Selected</button>
+            </div>
+          </div>
+
+          <div id="gridContainer"></div>
+        </div>
+      </div>
+
+      <div id="actionMsg"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
